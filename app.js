@@ -8,39 +8,47 @@ const weatherImage = document.querySelector(".weather__icon");
 
 async function checarClima(ciudadNueva) {
     const respuesta = await fetch(apiUrl + ciudadNueva + `&appid=${apiKey}`);
-    var data = await respuesta.json();
 
-    console.log(data);
-    let ciudad = data.name;
-    let temperatura = data.main.temp;
-    let humedad = data.main.humidity;
-    let velViento = data.wind.speed;
+    if (respuesta.status == 404) {
+        document.querySelector(".error").style.display = "block";
+        document.querySelector(".weather").style.display = "none";
+    } else {
+        var data = await respuesta.json();
 
-    document.querySelector(".weather__city").innerHTML = ciudad;
-    document.querySelector(".weather__temp").innerHTML = Math.round(temperatura) + "°C";
-    document.querySelector(".humidity").innerHTML = humedad + "%";
-    document.querySelector(".wind").innerHTML = velViento + " km/h";
+        console.log(data);
+        let ciudad = data.name;
+        let temperatura = data.main.temp;
+        let humedad = data.main.humidity;
+        let velViento = data.wind.speed;
 
-    if (data.weather[0].main == "Clouds") {
-        weatherImage.src = "./Images/clouds.png";
-    }
-    else if (data.weather[0].main == "Clear") {
-        weatherImage.src = "./Images/clear.png";
-    }
-    else if (data.weather[0].main == "Rain") {
-        weatherImage.src = "./Images/rain.png";
-    }
-    else if (data.weather[0].main == "Drizzle") {
-        weatherImage.src = "./Images/drizzle.png";
-    }
-    else if (data.weather[0].main == "Mist") {
-        weatherImage.src = "./Images/mist.png";
-    }
-    else if (data.weather[0].main == "Snow") {
-        weatherImage.src = "./Images/snow.png";
+        document.querySelector(".weather__city").innerHTML = ciudad;
+        document.querySelector(".weather__temp").innerHTML = Math.round(temperatura) + "°C";
+        document.querySelector(".humidity").innerHTML = humedad + "%";
+        document.querySelector(".wind").innerHTML = velViento + " km/h";
+
+        if (data.weather[0].main == "Clouds") {
+            weatherImage.src = "./Images/clouds.png";
+        }
+        else if (data.weather[0].main == "Clear") {
+            weatherImage.src = "./Images/clear.png";
+        }
+        else if (data.weather[0].main == "Rain") {
+            weatherImage.src = "./Images/rain.png";
+        }
+        else if (data.weather[0].main == "Drizzle") {
+            weatherImage.src = "./Images/drizzle.png";
+        }
+        else if (data.weather[0].main == "Mist") {
+            weatherImage.src = "./Images/mist.png";
+        }
+        else if (data.weather[0].main == "Snow") {
+            weatherImage.src = "./Images/snow.png";
+        }
+
+        document.querySelector(".weather").style.display = "block";
+        document.querySelector(".error").style.display = "none";
     }
 
-    document.querySelector(".weather").style.display = "block";
 }
 
 botonBuscar.addEventListener("click", () => {
