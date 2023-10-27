@@ -8,10 +8,10 @@
     font-weight: 500;
 }
 
-.weather h2{
+.weather__city{
     font-size: 45px;
     font-weight: 400;
-    margin-top: -10px;
+    margin-top: 10px;
 }
 
 .weather__details{
